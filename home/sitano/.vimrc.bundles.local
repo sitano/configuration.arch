@@ -1,0 +1,7 @@
+" vim +PluginInstall! +PluginClean +q
+Plugin 'evanmiller/nginx-vim-syntax'
+Plugin 'junegunn/fzf.vim'
+"Plugin 'mileszs/ack.vim'
+Plugin 'phildawes/racer'
+Plugin 'spf13/vim-autoclose'
+"Plugin 'vim-airline/vim-airline-themes'

@@ -1,0 +1,35 @@
+colorscheme darcula
+
+" export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+" command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)')
+" set grepprg=rg\ --vimgrep
+
+" https://github.com/spf13/spf13-vim/issues/567
+" Fix arrows keys / ompi complete remap {
+    imap <ESC>oA <ESC>ki
+    imap <ESC>oB <ESC>ji
+    imap <ESC>oC <ESC>li
+    imap <ESC>oD <ESC>hi
+" }
+
+" Haskell {
+    " use ghc functionality for haskell files
+    au Bufenter *.hs compiler ghc
+
+    " switch on syntax highlighting
+    syntax on
+
+    " enable filetype detection, plus loading of filetype plugins
+    filetype plugin on
+
+    let g:ghc = "/home/sitano/.stack/programs/x86_64-linux/ghc-8.0.1/bin/ghc"
+
+    " configure browser for haskell_doc.vim
+    let g:haddock_browser = "/usr/sbin/chromium"
+"}
+
+" Rust / racer {
+    set hidden
+    let g:racer_cmd = "/home/sitano/.cargo/bin/racer"
+    let $RUST_SRC_PATH="/home/sitano/.cargo/registry/src/github.com-1ecc6299db9ec823/racer-2.0.10/src/racer"
+" }"

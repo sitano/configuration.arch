@@ -1,0 +1,51 @@
+! xterm -----------------------------------------------------------------------
+
+xterm.termName: xterm-256color
+xterm.ttyModes: erase ^?
+xterm*faceName: Ubuntu Mono
+! xterm*facename: PowerlineSymbols
+xterm*faceSize: 14
+xterm*renderFont: true
+xterm*locale: true
+xterm*metaSendsEscape: true
+xterm*backarrowKey: false
+xterm*saveLines: 4096
+xterm*scrollBar: false 
+xterm*scrollbar.width: 4
+xterm*dynamicColors: 
+xterm*utf: on
+xterm*utf8: 2
+xterm*translations: #override \
+    <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0) \n\
+    Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
+    Ctrl Shift <Key>V: insert-selection(CLIPBOARD) \n\
+    Ctrl <Btn1Up>: exec-formatted("xdg-open '%t'", PRIMARY)
+
+#include ".Xresources.d/Xresources-themes/iterm-Solarized_Darcula.Xresources"
+
+! xpdf -----------------------------------------------------------------------
+
+xpdf*enableFreetype:    yes
+xpdf*antialias:         yes
+xpdf*foreground:        black
+xpdf*background:        white
+xpdf*urlCommand:        /usr/bin/chromium %s
+
+! xclock -----------------------------------------------------------------------
+
+xclock*update:            1
+xclock*analog:            false
+xclock*Foreground:        white
+xclock*background:        black
+
+! x11-ssh-askpass ------------------------------------------------------------
+
+x11-ssh-askpass*font:                   -*-dina-medium-r-*-*-12-*-*-*-*-*-*-*
+x11-ssh-askpass*background:             #000000
+x11-ssh-askpass*foreground:             #ffffff
+x11-ssh-askpass.Button*background:      #000000
+x11-ssh-askpass.Indicator*foreground:   #ff9900
+x11-ssh-askpass.Indicator*background:   #090909
+x11-ssh-askpass*topShadowColor:         #000000
+x11-ssh-askpass*bottomShadowColor:      #000000
+x11-ssh-askpass.*borderWidth:           1
