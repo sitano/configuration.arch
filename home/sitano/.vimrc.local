@@ -1,35 +1,49 @@
-colorscheme darcula
+" colorscheme darcula
 
 " export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 " command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)')
 " set grepprg=rg\ --vimgrep
 
+set shiftwidth=2                " Use indents of 2 spaces
+set expandtab                   " Tabs are spaces, not tabs
+set tabstop=2                   " An indentation every two columns
+set softtabstop=2               " Let backspace delete indent
+set conceallevel=1              " Each block of concealed text is replaced with one
+                                " character.  If the syntax item does not have a custom
+                                " replacement character defined (see |:syn-cchar|) the
+                                " character defined in 'listchars' is used.
+let g:AutoPairs = {}            " How to disable the automatic closing brackets? # 588
+                                " https://github.com/spf13/spf13-vim/issues/588
+let g:spf13_keep_trailing_whitespace = 0 " To disable the stripping of whitespace, add the following to your
+
+colorscheme solarized8_dark_high
+
 " https://github.com/spf13/spf13-vim/issues/567
 " Fix arrows keys / ompi complete remap {
-    imap <ESC>oA <ESC>ki
-    imap <ESC>oB <ESC>ji
-    imap <ESC>oC <ESC>li
-    imap <ESC>oD <ESC>hi
+  imap <ESC>oA <ESC>ki
+  imap <ESC>oB <ESC>ji
+  imap <ESC>oC <ESC>li
+  imap <ESC>oD <ESC>hi
 " }
 
 " Haskell {
-    " use ghc functionality for haskell files
-    au Bufenter *.hs compiler ghc
+" use ghc functionality for haskell files
+  au Bufenter *.hs compiler ghc
 
-    " switch on syntax highlighting
-    syntax on
+" switch on syntax highlighting
+  syntax on
 
-    " enable filetype detection, plus loading of filetype plugins
-    filetype plugin on
+" enable filetype detection, plus loading of filetype plugins
+  filetype plugin on
 
-    let g:ghc = "/home/sitano/.stack/programs/x86_64-linux/ghc-8.0.1/bin/ghc"
+  let g:ghc = "/home/sitano/.stack/programs/x86_64-linux/ghc-8.0.1/bin/ghc"
 
-    " configure browser for haskell_doc.vim
-    let g:haddock_browser = "/usr/sbin/chromium"
+" configure browser for haskell_doc.vim
+  let g:haddock_browser = "/usr/sbin/chromium"
 "}
 
 " Rust / racer {
-    set hidden
-    let g:racer_cmd = "/home/sitano/.cargo/bin/racer"
-    let $RUST_SRC_PATH="/home/sitano/.cargo/registry/src/github.com-1ecc6299db9ec823/racer-2.0.10/src/racer"
+  set hidden
+  let g:racer_cmd = "/home/sitano/.cargo/bin/racer"
+  let $RUST_SRC_PATH="/home/sitano/.cargo/registry/src/github.com-1ecc6299db9ec823/racer-2.1.23/src/racer"
 " }"
