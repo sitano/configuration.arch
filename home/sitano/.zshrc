@@ -28,6 +28,15 @@ alias grep='grep --color=auto'
 alias ghc='stack exec -- ghc'
 alias ghci='stack exec -- ghci'
 
+set_title() {
+  export DISABLE_AUTO_TITLE="true"
+  print -Pn "\e]0;$*\a"
+}
+
+unset_title() {
+  export DISABLE_AUTO_TITLE="false"
+}
+
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 export SSH_KEY_PATH="$HOME/.ssh/john.koepi.rsa"
