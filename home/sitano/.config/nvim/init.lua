@@ -160,10 +160,14 @@ require("lazy").setup({
     event = "InsertEnter",
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-nvim-lsp-signature-help',
-      -- 'hrsh7th/cmp-vsnip',
-      -- 'hrsh7th/vim-vsnip',
-      -- 'hrsh7th/vim-vsnip-integ',
+      'hrsh7th/cmp-vsnip',
+      'hrsh7th/vim-vsnip',
+      'hrsh7th/vim-vsnip-integ',
       'PaterJason/cmp-conjure',
       'rafamadriz/friendly-snippets',
       'L3MON4D3/LuaSnip',
@@ -179,7 +183,7 @@ require("lazy").setup({
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
       end
 
-      local cmp = require'cmp'
+      local cmp = require 'cmp'
 
       local luasnip = require 'luasnip'
       require('luasnip.loaders.from_vscode').lazy_load()
@@ -200,16 +204,18 @@ require("lazy").setup({
               select = true,
               behavior = cmp.ConfirmBehavior.Replace,
           }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-        
+    
           ["<Tab>"] = cmp.mapping(function(fallback)
+              local col = vim.fn.col('.') - 1
+
               if cmp.visible() then
-                  cmp.select_next_item()
-              elseif luasnip.expand_or_locally_jumpable() then
-                  luasnip.expand_or_jump()
+                cmp.select_next_item()
+              elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+                fallback()
               else
-                  fallback()
+                cmp.complete()
               end
-          end, { "i", "s" }),
+           end, { "i", "s" }),
 
           ["<S-Tab>"] = cmp.mapping(function()
               if cmp.visible() then
@@ -226,10 +232,13 @@ require("lazy").setup({
           { name = 'nvim_lsp_signature_help' },
           { name = 'luasnip' },
           { name = 'conjure' },
+          { name = 'buffer' },
+          { name = 'path' },
+          { name = 'cmdline' },
         }),
         completion = {
-          autocomplete = false,
-        }
+          autocomplete = false
+        },
       })
     end,
   },
@@ -353,12 +362,6 @@ require("lazy").setup({
         on_attach = on_attach,
         flags = flags,
         autostart = true,
-        capabilities = caps,
-      }
-      nvim_lsp.ruby_ls.setup {
-        on_attach = on_attach,
-        flags = flags,
-        autostart = false,
         capabilities = caps,
       }
       nvim_lsp.rust_analyzer.setup {
@@ -612,26 +615,27 @@ require("lazy").setup({
   'Olical/conjure',
   {
     'nvim-tree/nvim-tree.lua',
-    config = true
+    config = function()
+      require("nvim-tree").setup({
+        filters = {
+          git_ignored = false,
+        },
+      })
+    end,
   }
 })
 
 vim.cmd([[
-  nnoremap <silent> <C-e> :NvimTreeOpen<CR>
+  nnoremap <silent> <C-e> :NvimTreeFindFileToggle<CR>
   nnoremap <silent> <C-p> :Telescope<CR>
 
   nnoremap <silent> zx :bp<BAR>bd#<CR>
   nnoremap <silent> gq :bd<CR>
-  nnoremap <silent> zz :w<CR>
+  nnoremap <silent> <leader>w :w<CR>
   nnoremap <silent> <leader><Tab> <C-^>
   nnoremap <silent> Y y$
   nnoremap <silent> <leader>y "+yiw
   vnoremap <silent> <leader>y "+y
-
-  " nnoremap <silent> <Left> :tabp<CR>
-  " nnoremap <silent> <Right> :tabn<CR>
-  " nnoremap <silent> <Up> <nop>
-  " nnoremap <silent> <Down> <nop>
 
   map Q gq
 
