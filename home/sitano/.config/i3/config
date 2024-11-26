@@ -15,38 +15,26 @@ new_window $width
 new_float $width
 
 # Workspaces
-set $left DP-2
-set $right HDMI-0
+set $main DP-0
+# set $right HDMI-0
 
-workspace 1 output $left
-workspace 2 output $left
-workspace 3 output $left
-workspace 4 output $left
-workspace 5 output $right
-workspace 6 output $right
-workspace 7 output $right
-workspace 8 output $right
+# workspace 1 output $main
+# workspace 2 output $main
+# workspace 3 output $main
+# workspace 4 output $main
+# workspace 5 output $right
+# workspace 6 output $right
+# workspace 7 output $right
+# workspace 8 output $right
 
-for_window [workspace="1"] layout tabbed
-for_window [workspace="2"] layout tabbed
-for_window [workspace="3"] layout tabbed
-for_window [workspace="4"] layout tabbed
-for_window [workspace="5"] layout tabbed
-for_window [workspace="6"] layout tabbed
-for_window [workspace="7"] layout tabbed
-for_window [workspace="8"] layout tabbed
-
-exec i3-msg 'rename workspace 1 to "1: www"'
-exec i3-msg 'rename workspace 2 to "2: code"'
-exec i3-msg 'rename workspace 5 to "5: chat"'
-
-workspace www  output $left
-workspace code output $left
-workspace chat output $right
-
-for_window [workspace="www"] layout tabbed
-for_window [workspace="code"] layout tabbed
-for_window [workspace="chat"] layout tabbed
+# for_window [workspace="1"] layout tabbed
+# for_window [workspace="2"] layout tabbed
+# for_window [workspace="3"] layout tabbed
+# for_window [workspace="4"] layout tabbed
+# for_window [workspace="5"] layout tabbed
+# for_window [workspace="6"] layout tabbed
+# for_window [workspace="7"] layout tabbed
+# for_window [workspace="8"] layout tabbed
 
 set $mod Mod4
 
@@ -65,14 +53,15 @@ bindsym XF86AudioMute exec amixer -q set Master toggle
 bindsym Print exec scrot 'f%Y-%m-%d-%s_$wx$h.png' -e 'mv $f /home/${HOME}/'
 
 # Windows
-assign [class="Chromium"] www
+assign [class="Chromium"] 1
+assign [class="Firefox"] 1
 
-assign [class="Telegram"] chat
-assign [class="Skype"] chat
-assign [class="Thg"] chat
-assign [class="Slack"] chat
+assign [class="Telegram"] 5
+assign [class="Skype"] 5
+assign [class="Thg"] 5
+assign [class="Slack"] 5
 
-exec chromium
+exec firefox
 exec slack
 exec telegram-desktop
 # exec dropbox start
@@ -159,23 +148,26 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+1 workspace www
-bindsym $mod+2 workspace code
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
 bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace chat
+bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
+bindsym $mod+Ctrl+Left exec ~/.config/i3/switch-workspace prev 
+bindsym $mod+Ctrl+Right exec ~/.config/i3/switch-workspace next
+
 # move focused container to workspace
-bindsym $mod+Shift+exclam move container to workspace www
-bindsym $mod+Shift+at move container to workspace code
+bindsym $mod+Shift+exclam move container to workspace 1
+bindsym $mod+Shift+at move container to workspace 2
 bindsym $mod+Shift+numbersign move container to workspace 3
 bindsym $mod+Shift+dollar move container to workspace 4
-bindsym $mod+Shift+percent move container to workspace chat
+bindsym $mod+Shift+percent move container to workspace 5
 bindsym $mod+Shift+asciicircum move container to workspace 6
 bindsym $mod+Shift+ampersand move container to workspace 7
 bindsym $mod+Shift+asterisk move container to workspace 8
@@ -218,7 +210,7 @@ bindsym $mod+p mode "resize"
 
 bar {
   workspace_buttons yes
-  tray_output  $left
+  tray_output  $main
   status_command i3status
   position top
 

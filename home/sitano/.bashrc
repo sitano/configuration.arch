@@ -240,3 +240,4 @@ if [ -f "/opt/google-cloud-sdk/bin/kubectl"  ]; then source <(/opt/google-cloud-
 
 # added by travis gem
 # [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
+. "$HOME/.cargo/env"

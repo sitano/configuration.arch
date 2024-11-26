@@ -1,0 +1,23 @@
+ #!/bin/bash
+
+cur=$(i3-msg -t get_workspaces | jq -r '.[]| select(.focused).num')
+set=($(i3-msg -t get_workspaces | jq -r '.[].num'))
+ix=0
+
+for i in "${!set[@]}"; do
+   if [[ "${set[$i]}" = "${cur}" ]]; then
+       ix="${i}";
+   fi
+done
+
+len="${#set[@]}"
+next="${set[($ix + 1)%len]}"
+prev="${set[($ix - 1)%len]}"
+
+if [[ $1 == "next" ]]; then
+  i3-msg workspace number "$next"
+fi
+
+if [[ $1 == "prev" ]]; then
+  i3-msg workspacenumber "$prev"
+fi 

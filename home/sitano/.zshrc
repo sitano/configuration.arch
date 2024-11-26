@@ -7,8 +7,8 @@ ZSH_THEME="agnoster"
 CASE_SENSITIVE="true"
 DISABLE_AUTO_UPDATE="true"
 
-plugins=(colored-man colorize command-not-found cp history history-substring-search
-ant bower cabal cake coffee cpanm docker gas git github gitignore gnu-utils go golang
+plugins=(colorize command-not-found cp history history-substring-search
+ant bower cabal cake coffee cpanm docker gas git github gitignore gnu-utils golang
 heroku jira knife knife_ssh lein mercurial mix mvn nanoc postgres perl redis-cli rebar
 repo sbt scala svn svn-fast-info vagrant node npm nvm composer phing bundler
 capistrano gem jruby pow rake rbenv ruby rvm thor zeus fabric pip python virtualenv
@@ -60,16 +60,14 @@ export LESS_TERMCAP_us=$'\033[04;38;5;146m'
 # export PERL_MM_OPT="INSTALL_BASE=/home/sitano/perl5"
 # export PERL5LIB="/home/sitano/perl5/lib/perl5/x86_64-linux-gnu-thread-multi:/home/sitano/perl5/lib/perl5"
 # export PATH="/home/sitano/perl5/bin:$PATH"
-export PATH="/usr/bin/vendor_perl:$PATH"
+# export PATH="/usr/bin/vendor_perl:$PATH"
 
-export ALTERNATE_EDITOR=vim EDITOR=vim VISUAL=vim
-export TERMINAL=gnome-terminal
+export ALTERNATE_EDITOR=nvim EDITOR=nvim VISUAL=nvim
+export TERMINAL=wezterm
 
-# export PATH="/opt/vagrant/bin:$PATH"
-# export PATH="/opt/packer:$PATH"
-
-# Haskell / Stack
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="/opt/asdf-vm/bin:$PATH"
+export PATH="$HOME/.asdf/shims:$PATH"
 
 # User specific environment and startup programs
 export GOROOT=/usr/lib/go
@@ -78,12 +76,6 @@ export GOOS=linux
 export GOARCH=amd64
 
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
-
-# Hadoop
-# export PATH=$HOME/.cask/bin:$PATH
-
-# Node.JS
-# export PATH=$PATH:$HOME/Projects/node-v7.9.0-linux-x64/bin
 
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH";

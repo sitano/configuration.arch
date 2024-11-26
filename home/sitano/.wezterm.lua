@@ -44,55 +44,74 @@ config.keys = {
   -- be potentially recognized and handled by the tab
   {
     key = 'LeftArrow',
-    mods = 'CMD',
+    mods = 'ALT',
     action = wezterm.action.ActivateTabRelative(-1)
   },
   {
     key = 'RightArrow',
-    mods = 'CMD',
+    mods = 'ALT',
     action = wezterm.action.ActivateTabRelative(1)
   },
   {
     key = ']',
-    mods = 'CMD',
+    mods = 'ALT',
     action = wezterm.action.ActivatePaneDirection 'Next',
   },
   {
     key = '[',
-    mods = 'CMD',
+    mods = 'ALT',
     action = wezterm.action.ActivatePaneDirection 'Prev',
   },
   {
     key = 'UpArrow',
-    mods = 'CMD',
+    mods = 'ALT',
     action = wezterm.action.ActivatePaneDirection 'Next',
   },
   {
     key = 'DownArrow',
-    mods = 'CMD',
+    mods = 'ALT',
     action = wezterm.action.ActivatePaneDirection 'Prev',
   },
   {
     key = 'w',
-    mods = 'CMD',
+    mods = 'ALT',
     action = wezterm.action.CloseCurrentPane { confirm = false },
   },
   {
     key = 'v',
-    mods = 'SHIFT|CMD',
+    mods = 'SHIFT|ALT',
     action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
   },
   {
     key = 'h',
-    mods = 'SHIFT|CMD',
+    mods = 'SHIFT|ALT',
     action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
   },
   {
     key = 'r',
-    mods = 'SHIFT|CMD', 
+    mods = 'SHIFT|ALT', 
     action = wezterm.action.RotatePanes 'Clockwise',
   },
+  {
+    key = 't',
+    mods = 'ALT',
+    action = wezterm.action.SpawnTab 'CurrentPaneDomain',
+  }
 }
+
+for i = 1, 8 do
+  -- CTRL+ALT + number to activate that tab
+  table.insert(config.keys, {
+    key = tostring(i),
+    mods = 'ALT',
+    action = wezterm.action.ActivateTab(i - 1),
+  })
+  -- F1 through F8 to activate that tab
+  table.insert(config.keys, {
+    key = 'F' .. tostring(i),
+    action = wezterm.action.ActivateTab(i - 1),
+  })
+end
 
 wezterm.on('update-right-status', function(window, pane)
   local date = wezterm.strftime '%Y-%m-%d %H:%M:%S'
