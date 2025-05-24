@@ -79,8 +79,25 @@ vim.wo.relativenumber  = true
 vim.opt.completeopt    = 'menuone,noselect'
 vim.o.clipboard        = 'unnamedplus'
 vim.o.mousescroll      = 'ver:2,hor:0'
-vim.o.list             = true
 -- vim.opt.statusline     = '%<%F %h%m%r%=%l,%c%V  %P'
+
+-- render whitespace characters
+vim.o.list             = true
+vim.o.listchars        = 'space:·,tab:-> ,lead:•,trail:•'
+
+-- render trailing whitespace characters (https://www.manjotbal.ca/blog/neovim-whitespace.html)
+vim.api.nvim_set_hl(0, 'TrailingWhitespace', { bg='LightRed' })
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = '*',
+  command = [[
+    syntax clear TrailingWhitespace |
+    syntax match TrailingWhitespace "\_s\+$"
+  ]]}
+)
+
+-- local project configs
+vim.o.exrc = true
+vim.o.secure = true
 
 function lsp_buf_bindings(client, bufnr)
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
