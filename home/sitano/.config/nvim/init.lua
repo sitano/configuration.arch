@@ -47,7 +47,7 @@ vim.g.netrw_browse_split = 0
 vim.g.netrw_banner       = 0
 vim.g.netrw_winsize      = 25
 
--- vim.opt.guifont = "Comic Mono:h24"
+vim.opt.guifont = "Comic Mono:h24"
 vim.opt.termguicolors = true
 vim.opt.scrolloff     = 8
 vim.opt.updatetime    = 250
@@ -75,7 +75,8 @@ vim.opt.wildignorecase = true
 vim.opt.mouse          = 'nv'
 vim.wo.signcolumn      = 'yes'
 vim.wo.number          = true
-vim.opt.completeopt    = 'menuone,noselect,noinsert'
+vim.wo.relativenumber  = true
+vim.opt.completeopt    = 'menuone,noselect'
 vim.o.clipboard        = 'unnamedplus'
 vim.o.mousescroll      = 'ver:2,hor:0'
 vim.o.list             = true
@@ -101,6 +102,120 @@ function lsp_buf_bindings(client, bufnr)
 end
 
 require("lazy").setup({
+  {
+   -- Break bad habits, master Vim motions
+   "m4xshen/hardtime.nvim",
+   lazy = false,
+   dependencies = { "MunifTanjim/nui.nvim" },
+   opts = {
+      disable_mouse = false,
+      disabled_keys = {
+       ["<Up>"] = false, -- Allow <Up> key
+       ["<Down>"] = false,
+       ["<Left>"] = false,
+       ["<Right>"] = false,
+    },
+    },
+  },
+  {
+    -- Neovim's answer to the mouse
+    "ggandor/leap.nvim",
+    lazy = false,
+    dependencies = {},
+    opts = {},
+    config = function()
+      vim.keymap.set({'n', 'x', 'o'}, 't', '<Plug>(leap)')
+      vim.keymap.set('n',             'T', '<Plug>(leap-from-window)')
+    end,
+  },
+  {
+    -- Advanced notification system.
+    "j-hui/fidget.nvim",
+    opts = {
+      -- options
+    },
+  },
+  {
+    "github/copilot.vim",
+    config = function()
+      vim.g.copilot_no_tab_map = true
+      vim.keymap.set('i', '<C-c>', 'copilot#Accept("<CR>")', { expr = true, silent = true, replace_keycodes = false })
+      vim.keymap.set('i', '<C-e>', 'copilot#Dismiss()', { expr = true, silent = true, replace_keycodes = false })
+    end
+  },
+  {
+    -- Chat with GitHub Copilot in Neovim.
+    "CopilotC-Nvim/CopilotChat.nvim",
+    dependencies = {
+      { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
+      { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+    },
+    build = "make tiktoken", -- Only on MacOS or Linux
+    opts = {
+      -- See Configuration section for options
+    },
+  },
+  {
+    -- A snazzy bufferline for Neovim.
+    'akinsho/bufferline.nvim', 
+    version = "*", 
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    event = "VeryLazy",
+    keys = {
+      -- { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle Pin" },
+      -- { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete Non-Pinned Buffers" },
+      -- { "<leader>br", "<Cmd>BufferLineCloseRight<CR>", desc = "Delete Buffers to the Right" },
+      -- { "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", desc = "Delete Buffers to the Left" },
+      -- { "<S-h>", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev Buffer" },
+      -- { "<S-l>", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
+      -- { "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev Buffer" },
+      -- { "]b", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
+      -- { "[B", "<cmd>BufferLineMovePrev<cr>", desc = "Move buffer prev" },
+      -- { "]B", "<cmd>BufferLineMoveNext<cr>", desc = "Move buffer next" },
+    },
+    opts = {
+      options = {
+        -- stylua: ignore
+        close_command = function(n) Snacks.bufdelete(n) end,
+        -- stylua: ignore
+        right_mouse_command = function(n) Snacks.bufdelete(n) end,
+        diagnostics = "nvim_lsp",
+        always_show_bufferline = false,
+        -- diagnostics_indicator = function(_, _, diag)
+        --   local icons = LazyVim.config.icons.diagnostics
+        --   local ret = (diag.error and icons.Error .. diag.error .. " " or "")
+        --     .. (diag.warning and icons.Warn .. diag.warning or "")
+        --   return vim.trim(ret)
+        -- end,
+        offsets = {
+          {
+            filetype = "neo-tree",
+            text = "Neo-tree",
+            highlight = "Directory",
+            text_align = "left",
+          },
+          {
+            filetype = "snacks_layout_box",
+          },
+        },
+        ---@param opts bufferline.IconFetcherOpts
+        -- get_element_icon = function(opts)
+        --   return LazyVim.config.icons.ft[opts.filetype]
+        -- end,
+      },
+    },
+    config = function(_, opts)
+      require("bufferline").setup(opts)
+      -- Fix bufferline when restoring a session
+      vim.api.nvim_create_autocmd({ "BufAdd", "BufDelete" }, {
+        callback = function()
+          vim.schedule(function()
+            pcall(nvim_bufferline)
+          end)
+        end,
+      })
+    end,
+  },
   -- {
   --   -- A color scheme for Sublime Text, (Neo)Vim, iTerm, and more. Based on Atom's One.
   --   -- 'sonph/onehalf',
@@ -198,16 +313,6 @@ require("lazy").setup({
       vim.cmd([[
         nnoremap <silent> <leader><cr> <cmd>ZenMode<cr>
       ]])
-    end
-  },
-  {
-    'github/copilot.vim',
-    config = function() 
-      vim.keymap.set('i', '<C-C>', 'copilot#Accept("\\<CR>")', {
-        expr = true,
-        replace_keycodes = false
-      })
-      vim.g.copilot_no_tab_map = true
     end
   },
   {
@@ -431,6 +536,7 @@ require("lazy").setup({
         flags = flags,
         autostart = false,
         capabilities = caps,
+        autoformat = true,
       }
       nvim_lsp.yamlls.setup {
         on_attach = on_attach,
