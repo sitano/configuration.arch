@@ -63,7 +63,7 @@ assign [class="Slack"] 5
 
 exec firefox
 exec slack
-exec telegram-desktop
+exec Telegram
 # exec dropbox start
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -73,6 +73,8 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
+font pango:Monospace Mono 11
+font xft:Droid Sans Mono 11
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -210,7 +212,7 @@ bindsym $mod+p mode "resize"
 
 bar {
   workspace_buttons yes
-  tray_output  $main
+  tray_output  primary
   status_command i3status
   position top
 
