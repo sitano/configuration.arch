@@ -118,6 +118,30 @@ function lsp_buf_bindings(client, bufnr)
   vim.keymap.set('n', 'gh', vim.diagnostic.open_float, bufopts)
 end
 
+-- Toggle inlay hints for the current buffer: lua vim.lsp.inlay_hint.enable()
+function ToggleInlayHints()
+    local buf = vim.api.nvim_get_current_buf()
+    local enabled = vim.lsp.inlay_hint.is_enabled(buf)
+    vim.lsp.inlay_hint.enable(buf, not enabled)
+end
+
+vim.api.nvim_set_keymap("n", "<leader>ih", "<cmd>lua ToggleInlayHints()<CR>", { noremap = true, silent = true })
+
+-- Toggle spellcheck: setlocal spell lang=en_us
+function ToggleBufferSpellCheck()
+  local buf = vim.api.nvim_get_current_buf()
+  if vim.wo.spell then
+    vim.wo.spell = false
+    vim.api.nvim_echo({{"Spell check disabled", "WarningMsg"}}, false, {})
+  else
+    vim.wo.spell = true
+    vim.wo.spelllang = "en_us"
+    vim.api.nvim_echo({{"Spell check enabled", "MoreMsg"}}, false, {})
+  end
+end
+
+vim.api.nvim_set_keymap("n", "<leader>il", "<cmd>lua ToggleBufferSpellCheck()<CR>", { noremap = true, silent = true })
+
 require("lazy").setup({
   {
    -- Break bad habits, master Vim motions
@@ -476,6 +500,7 @@ require("lazy").setup({
   },
   {
     'neovim/nvim-lspconfig',
+    opts = { },
     config = function()
       require('neodev').setup()
 
@@ -553,7 +578,7 @@ require("lazy").setup({
         flags = flags,
         autostart = false,
         capabilities = caps,
-        autoformat = true,
+        autoformat = false,
       }
       nvim_lsp.yamlls.setup {
         on_attach = on_attach,
@@ -623,6 +648,17 @@ require("lazy").setup({
       }
       -- telescope.load_extension("file_browser")
       telescope.load_extension("fzf")
+
+      -- send usage references to the quickfix window instead of using dynamic Scratch buffer.
+      require('telescope.builtin').lsp_references({
+        attach_mappings = function(_, map)
+          map('i', '<C-q>', function(prompt_bufnr)
+            require('telescope.actions').send_selected_to_qflist(prompt_bufnr)
+            vim.cmd('copen')
+          end)
+          return true
+        end
+      })
 
       vim.cmd([[
         " nnoremap <silent> - :Telescope file_browser path=%:p:h hidden=true<cr>
