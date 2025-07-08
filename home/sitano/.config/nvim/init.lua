@@ -99,6 +99,10 @@ vim.api.nvim_create_autocmd('BufEnter', {
 vim.o.exrc = true
 vim.o.secure = true
 
+-- Scroll one line for Colemak corrections
+vim.keymap.set("n", "<C-k>", "<C-Y>", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-j>", "<C-E>", { noremap = true, silent = true })
+
 function lsp_buf_bindings(client, bufnr)
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
