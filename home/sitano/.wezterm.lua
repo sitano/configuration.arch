@@ -13,12 +13,12 @@ config.audible_bell = 'Disabled'
 local font = wezterm.font("JetBrainsMono Nerd Font Mono")
 
 config.font = font
-config.font_size = 12
-config.command_palette_font_size = 12
-config.char_select_font_size = 12
+config.font_size = 16
+config.command_palette_font_size = 16
+config.char_select_font_size = 16
 config.window_frame = {
   font      = font,
-  font_size = 28,
+  font_size = 32,
 }
 
 config.colors = {
@@ -96,6 +96,16 @@ config.keys = {
     key = 't',
     mods = 'ALT',
     action = wezterm.action.SpawnTab 'CurrentPaneDomain',
+  },
+  {
+    key = 'LeftArrow',
+    mods = 'ALT|SHIFT',
+    action = wezterm.action.MoveTabRelative(-1),
+  },
+  {
+    key = 'RightArrow',
+    mods = 'ALT|SHIFT',
+    action = wezterm.action.MoveTabRelative(1),
   }
 }
 
@@ -108,7 +118,6 @@ for i = 1, 8 do
   })
   -- F1 through F8 to activate that tab
   table.insert(config.keys, {
-    key = 'F' .. tostring(i),
     action = wezterm.action.ActivateTab(i - 1),
   })
 end
