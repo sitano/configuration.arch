@@ -117,9 +117,9 @@ for i = 1, 8 do
     action = wezterm.action.ActivateTab(i - 1),
   })
   -- F1 through F8 to activate that tab
-  table.insert(config.keys, {
-    action = wezterm.action.ActivateTab(i - 1),
-  })
+  -- table.insert(config.keys, {
+  --   action = wezterm.action.ActivateTab(i - 1),
+  -- })
 end
 
 wezterm.on('update-right-status', function(window, pane)

@@ -542,10 +542,45 @@ require("lazy").setup({
       local caps = vim.lsp.protocol.make_client_capabilities()
       caps = require('cmp_nvim_lsp').default_capabilities(caps)
 
+      vim.lsp.config.lua = {
+        cmd = { "lua-language-server" },
+        filetypes = { "lua" },
+        root_markers = {
+          ".luarc.json",
+          ".luarc.jsonc",
+          ".luacheckrc",
+          ".stylua.toml",
+          "stylua.toml",
+          "selene.toml",
+          "selene.yml",
+          ".git",
+        },
+        settings = {
+          Lua = {
+            runtime = {
+              version = 'LuaJIT',
+              path = vim.split(package.path, ";"),
+            },
+            diagnostics = {
+              globals = { 'vim' },
+            },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+            },
+            telemetry = {
+              enable = false,
+            },
+          },
+        },
+      }
+
+      vim.lsp.enable("lua")
+
       local nvim_lsp = require('lspconfig')
-      flags = {
+      local flags = {
         debounce_text_changes = 500,
       }
+
       nvim_lsp.gopls.setup {
         on_attach = on_attach,
         flags = flags,
