@@ -76,7 +76,7 @@ vim.opt.mouse          = 'nv'
 vim.wo.signcolumn      = 'yes'
 vim.wo.number          = true
 vim.wo.relativenumber  = true
-vim.opt.completeopt    = 'menuone,noselect'
+vim.opt.completeopt    = 'menu,menuone' -- no noselect to always start at 1st line
 vim.o.clipboard        = 'unnamedplus'
 vim.o.mousescroll      = 'ver:2,hor:0'
 -- vim.opt.statusline     = '%<%F %h%m%r%=%l,%c%V  %P'
@@ -519,7 +519,7 @@ require("lazy").setup({
       vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
       vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
-      local on_attach = function(client, bufnr)
+      local on_attach = function(_, bufnr)
         local bufopts = { noremap=true, silent=true, buffer=bufnr }
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
@@ -724,7 +724,7 @@ require("lazy").setup({
     'nvim-treesitter/nvim-treesitter',
     config = function()
       require("nvim-treesitter.configs").setup {
-        ensure_installed = { 
+        ensure_installed = {
           "vimdoc",
           "javascript",
           "typescript",
@@ -818,7 +818,7 @@ require("lazy").setup({
 
       let g:ale_go_golangci_lint_options = ''
       let g:ale_go_golangci_lint_package = 1
-      
+
       let g:ale_fixers = {
                   \ 'go': ['goimports'],
                   \ 'rust': ['rustfmt'],
@@ -950,6 +950,26 @@ require("lazy").setup({
             -- Highlights:
             -- SatelliteQuickfix (default links to WarningMsg)
           }
+        },
+      }
+    end
+  },
+  {
+    -- Make editing big files faster.
+    "LunarVim/bigfile.nvim",
+    config = function()
+      require("bigfile").setup {
+        filesize = 2, -- size of the file in MiB, the plugin round file sizes to the closest MiB
+        pattern = { "*" }, -- autocmd pattern or function see <### Overriding the detection of big files>
+        features = { -- features to disable
+          "indent_blankline",
+          "illuminate",
+          "lsp",
+          "treesitter",
+          "syntax",
+          "matchparen",
+          "vimopts",
+          "filetype",
         },
       }
     end
