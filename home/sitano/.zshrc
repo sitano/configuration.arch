@@ -124,3 +124,23 @@ if [ -f "/opt/google-cloud-sdk/bin/kubectl"  ]; then source <(/opt/google-cloud-
 
 # added by travis gem
 # [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
+
+# Mise
+eval "$(mise activate zsh)"
+
+# ASDF
+# export PATH=~/.asdf/shims:$PATH
+
+# Atuin history search.
+# Bind ctrl-r but not up arrow.
+eval "$(atuin init zsh --disable-up-arrow)"
+
+# Claude Code - DeepSeek
+# export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
+# export ANTHROPIC_AUTH_TOKEN=...
+# export ANTHROPIC_MODEL=deepseek-v4-pro[1m]
+# export ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-v4-pro[1m]
+# export ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-v4-pro[1m]
+# export ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-v4-flash
+# export CLAUDE_CODE_SUBAGENT_MODEL=deepseek-v4-flash
+# export CLAUDE_CODE_EFFORT_LEVEL=max
