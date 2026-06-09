@@ -641,9 +641,10 @@ require("lazy").setup({
   },
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
     config = function()
-      require("nvim-treesitter.configs").setup {
-        ensure_installed = { 
+      require("nvim-treesitter.config").setup {
+        ensure_installed = {
           "vimdoc",
           "javascript",
           "typescript",
@@ -681,8 +682,8 @@ require("lazy").setup({
     end,
     build = ":TSUpdate",
     dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-      'nvim-treesitter/playground',
+      { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main' },
+      -- Deprecated { 'nvim-treesitter/playground', branch = 'main' },
     }
   },
   'radenling/vim-dispatch-neovim',
