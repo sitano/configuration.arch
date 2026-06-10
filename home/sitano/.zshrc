@@ -144,3 +144,10 @@ eval "$(atuin init zsh --disable-up-arrow)"
 # export ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-v4-flash
 # export CLAUDE_CODE_SUBAGENT_MODEL=deepseek-v4-flash
 # export CLAUDE_CODE_EFFORT_LEVEL=max
+
+# Nvim GitHub Copilot
+# HTTP_PROXY=socks5://127.0.0.1:10800 nvim
+
+# VSCode
+# code/user/settings.json
+# { "http.proxy": "socks5://127.0.0.1:10800" }
