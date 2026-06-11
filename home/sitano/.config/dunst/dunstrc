@@ -1,0 +1,169 @@
+# =============================================================================
+# dunst config — beautiful notifications for i3
+# =============================================================================
+
+[global]
+
+# --- Geometry ---------------------------------------------------------------
+# Origin: top-right feels most natural for notifications
+origin = top-right
+offset = 24x24
+
+# Size: wider for readability on 4K, but not too wide
+width = 420
+height = (0, 200)   # min 0, max 200 — auto-size within that window
+
+# Gap between stacked notifications
+separator_height = 8
+
+# Rounded corners for a modern look
+# corner_radius = 12
+
+# Padding inside the notification bubble
+frame_width = 2
+horizontal_padding = 20
+vertical_padding = 16
+text_icon_padding = 14
+
+# Don't push notifications over fullscreen windows
+fullscreen = pushback
+
+# Show 5 at most, then queue
+notification_limit = 5
+
+# --- Progress / history -----------------------------------------------------
+# Mini progress bar at the bottom of the bubble (for volume, brightness, etc.)
+progress_bar = true
+progress_bar_height = 3
+progress_bar_min_width = 100
+progress_bar_max_width = 380
+progress_bar_corner_radius = 2
+progress_bar_frame_width = 0
+
+# Keep a small indicator showing stacked count
+stack_duplicates = true
+hide_duplicate_count = false
+
+# --- Typography -------------------------------------------------------------
+font = JetBrainsMono Nerd Font 12
+
+# Scale text up a bit — at 162 DPI, 12pt JetBrainsMono works well
+# line_height scales relative to font size
+line_height = 4
+
+# Markup: allow <b>, <i>, <u>, <span> from apps like Spotify, Slack, etc.
+markup = full
+ellipsize = middle
+
+# Word wrap
+word_wrap = yes
+ignore_newline = no
+
+# --- Transparency & compositing ---------------------------------------------
+# Subtle transparency — darkens the i3 background showing through
+transparency = 8
+
+# --- Behavior ---------------------------------------------------------------
+# Timeout: how long notifications stay (seconds)
+# Low: brief info, Normal: default, Critical: stay until clicked
+timeout = 6
+idle_threshold = 30   # don't auto-dismiss if you've been idle this long
+
+# Mouse actions on the notification
+mouse_left_click = do_action, close_current
+mouse_middle_click = close_all
+mouse_right_click = close_current
+
+# --- Icons ------------------------------------------------------------------
+icon_position = left
+max_icon_size = 64
+icon_theme = Adwaita
+
+# If no icon, show a tiny colored dot instead of a broken image placeholder
+show_indicators = false
+
+# --- Alignment --------------------------------------------------------------
+alignment = left
+vertical_alignment = center
+
+# --- History ----------------------------------------------------------------
+sticky_history = yes
+history_length = 20
+
+# =============================================================================
+# Urgency levels — color-coded for instant recognition
+# =============================================================================
+
+[urgency_low]
+timeout = 4
+background = "#2a2a2a"
+foreground = "#888888"
+frame_color = "#3a3a3a"
+
+[urgency_normal]
+timeout = 6
+background = "#282828"
+foreground = "#d4d4d4"
+frame_color = "#4a6a8a"
+
+[urgency_critical]
+timeout = 0    # never auto-dismiss
+background = "#2d1a1a"
+foreground = "#f0c0c0"
+frame_color = "#cc5555"
+
+# =============================================================================
+# Per-app overrides — let specific apps look distinct
+# =============================================================================
+
+# --- Spotify / media players -------------------------------------------------
+[Spotify]
+appname = Spotify
+override_pause_level = 60
+background = "#1b2a1b"
+foreground = "#b8d8b8"
+frame_color = "#4a8a4a"
+set_stack_tag = "media"
+
+# --- Volume / brightness (via dunstify) -------------------------------------
+[volume]
+summary = "*Volume*"
+set_stack_tag = "volume"
+background = "#2a2a30"
+foreground = "#c0c0e0"
+frame_color = "#6a6aaa"
+timeout = 3
+
+[brightness]
+summary = "*Brightness*"
+set_stack_tag = "brightness"
+background = "#2a2a20"
+foreground = "#e0d0a0"
+frame_color = "#8a7a3a"
+timeout = 3
+
+# --- Screenshots -------------------------------------------------------------
+[screenshot]
+summary = "*Screenshot*"
+background = "#1a2a2a"
+foreground = "#a0d0d0"
+frame_color = "#4a8a8a"
+timeout = 4
+
+# --- DND mode indicator -----------------------------------------------------
+[dnd]
+summary = "*DND*"
+background = "#2a2010"
+foreground = "#e0c080"
+frame_color = "#8a6a2a"
+timeout = 2
+
+# =============================================================================
+# Experimental: inline colored bar
+# =============================================================================
+# If you want a 3px colored accent stripe on the left edge instead of a full
+# frame, uncomment this and comment out frame_color above:
+#
+# [global]
+#   frame_color = "#00000000"   # invisible frame
+#   highlight = "#4a6a8a"       # this becomes the accent stripe
