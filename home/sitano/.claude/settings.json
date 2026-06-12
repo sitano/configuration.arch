@@ -1,7 +1,14 @@
 {
+  "statusLine": {
+    "type": "command",
+    "command": "mise exec node -- npx -y ccstatusline@latest",
+    "padding": 0,
+    "refreshInterval": 10
+  },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
-    "superpowers-extended-cc@superpowers-extended-cc-marketplace": true
+    "superpowers-extended-cc@superpowers-extended-cc-marketplace": true,
+    "frontend-design@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "superpowers-extended-cc-marketplace": {
@@ -11,11 +18,19 @@
       }
     }
   },
-  "theme": "dark-daltonized",
-  "statusLine": {
-    "type": "command",
-    "command": "mise exec node -- npx -y ccstatusline@latest",
-    "padding": 0,
-    "refreshInterval": 10
-  }
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "permission_prompt|idle_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mise exec node -- npx tsx \"$HOME/.claude/hooks/notification-desktop.ts\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "theme": "dark-daltonized"
 }
