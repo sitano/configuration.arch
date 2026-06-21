@@ -140,6 +140,10 @@ require("lazy").setup({
        ["<Down>"] = false,
        ["<Left>"] = false,
        ["<Right>"] = false,
+       ["k"] = false, -- Allow <Up> key
+       ["j"] = false,
+       ["l"] = false,
+       ["h"] = false,
     },
     },
   },

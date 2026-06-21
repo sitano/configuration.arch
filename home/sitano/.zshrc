@@ -7,8 +7,8 @@ ZSH_THEME="agnoster"
 CASE_SENSITIVE="true"
 DISABLE_AUTO_UPDATE="true"
 
-plugins=(colorize command-not-found cp history history-substring-search
-ant bower cabal cake coffee cpanm docker gas git github gitignore gnu-utils golang
+plugins=(colored-man colorize command-not-found cp history history-substring-search
+ant bower cabal cake coffee cpanm docker gas git github gitignore gnu-utils go golang
 heroku jira knife knife_ssh lein mercurial mix mvn nanoc postgres perl redis-cli rebar
 repo sbt scala svn svn-fast-info vagrant node npm nvm composer phing bundler
 capistrano gem jruby pow rake rbenv ruby rvm thor zeus fabric pip python virtualenv
@@ -18,7 +18,9 @@ source $ZSH/oh-my-zsh.sh
 
 alias arch='uname -m'
 
-alias ll='ls -alh'
+alias exa='eza -la'
+alias ll='eza'
+alias lla='eza -la --sort new'
 
 alias afind='ack -il'
 
@@ -27,6 +29,8 @@ alias grep='grep --color=auto'
 
 alias ghc='stack exec -- ghc'
 alias ghci='stack exec -- ghci'
+
+alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 
 set_title() {
   export DISABLE_AUTO_TITLE="true"
@@ -78,15 +82,15 @@ export GOARCH=amd64
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 
 # Rust
-export PATH="$HOME/.cargo/bin:$PATH";
+export PATH="$HOME/.cargo/bin:$PATH"
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # EC2 Configuration
-export EC2_HOME=~/.ec2
-export EC2_URL=https://ec2.eu-west-1.amazonaws.com
-export EC2_CERT=$EC2_HOME/cert.pem
-export EC2_PRIVATE_KEY=$EC2_HOME/pk.pem
-export PATH=$EC2_HOME/bin:$PATH
+# export EC2_HOME=~/.ec2
+# export EC2_URL=https://ec2.eu-west-1.amazonaws.com
+# export EC2_CERT=$EC2_HOME/cert.pem
+# export EC2_PRIVATE_KEY=$EC2_HOME/pk.pem
+# export PATH=$EC2_HOME/bin:$PATH
 
 # Java
 export JAVA_HOME=/usr/lib/jvm/default
@@ -147,6 +151,7 @@ eval "$(atuin init zsh --disable-up-arrow)"
 
 # Nvim GitHub Copilot
 # HTTP_PROXY=socks5://127.0.0.1:10800 nvim
+alias nvim='HTTP_PROXY=socks5://127.0.0.1:10800 nvim'
 
 # VSCode
 # code/user/settings.json
