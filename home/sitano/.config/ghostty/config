@@ -1,0 +1,72 @@
+# Ghostty configuration - converted from Wezterm
+
+# Scrollback
+scrollback-limit = 100000
+
+# Font settings
+font-family = JetBrainsMono Nerd Font Mono
+font-size = 15
+
+# Keybindings
+# Note: Ghostty uses different keyboard shortcut systems
+# "super" is CMD on macOS, "ctrl" is Control, etc.
+# Format: keybind=modifier+key=action
+
+# Tab navigation - CMD/Ctrl + Left/Right arrows
+keybind=super+left=previous_tab
+keybind=super+right=next_tab
+# Also support Ctrl for consistency
+keybind=ctrl+left=previous_tab
+keybind=ctrl+right=next_tab
+
+# Move tabs - CMD/Ctrl + Shift + Left/Right arrows
+keybind=super+shift+left=move_tab:-1
+keybind=super+shift+right=move_tab:1
+keybind=ctrl+shift+left=move_tab:-1
+keybind=ctrl+shift+right=move_tab:1
+
+# New tab - CMD/Ctrl + t
+keybind=super+t=new_tab
+keybind=ctrl+t=new_tab
+
+# Close tab/pane - CMD/Ctrl + w
+keybind=super+w=close_tab:this
+# keybind=ctrl+w=close_tab:this
+
+# Split panes - Shift + CMD/Ctrl + v/h
+# Horizontal split (creates new pane to the right)
+keybind=shift+super+v=new_split:right
+keybind=shift+ctrl+v=new_split:right
+
+# Vertical split (creates new pane below)
+keybind=shift+super+h=new_split:down
+keybind=shift+ctrl+h=new_split:down
+
+# Pane navigation
+keybind=super+up=goto_split:up
+keybind=super+down=goto_split:down
+keybind=ctrl+up=goto_split:up
+keybind=ctrl+down=goto_split:down
+keybind=super+]=goto_split:next
+keybind=ctrl+]=goto_split:next
+keybind=super+[=goto_split:previous
+keybind=ctrl+[=goto_split:previous
+
+# Quick tab switching - CMD/Ctrl + 1-8
+keybind=super+1=goto_tab:1
+keybind=super+2=goto_tab:2
+keybind=super+3=goto_tab:3
+keybind=super+4=goto_tab:4
+keybind=super+5=goto_tab:5
+keybind=super+6=goto_tab:6
+keybind=super+7=goto_tab:7
+keybind=super+8=goto_tab:8
+# Also support Ctrl
+keybind=ctrl+1=goto_tab:1
+keybind=ctrl+2=goto_tab:2
+keybind=ctrl+3=goto_tab:3
+keybind=ctrl+4=goto_tab:4
+keybind=ctrl+5=goto_tab:5
+keybind=ctrl+6=goto_tab:6
+keybind=ctrl+7=goto_tab:7
+keybind=ctrl+8=goto_tab:8
