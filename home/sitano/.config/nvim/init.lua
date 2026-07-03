@@ -202,8 +202,8 @@ require("lazy").setup({
   },
   {
     -- A snazzy bufferline for Neovim.
-    'akinsho/bufferline.nvim', 
-    version = "*", 
+    'akinsho/bufferline.nvim',
+    version = "*",
     dependencies = 'nvim-tree/nvim-web-devicons',
     event = "VeryLazy",
     keys = {
@@ -320,7 +320,7 @@ require("lazy").setup({
 
   'folke/lsp-colors.nvim',
   {
-    -- A pretty diagnostics, references, telescope results, quickfix and location list to help you solve all the trouble your code is causing. 
+    -- A pretty diagnostics, references, telescope results, quickfix and location list to help you solve all the trouble your code is causing.
     "folke/trouble.nvim",
     cmd = "Trouble",
     opts = {},
@@ -332,15 +332,15 @@ require("lazy").setup({
       },
     },
   },
-  { 
+  {
     -- Twilight is a Lua plugin for Neovim 0.5 that dims inactive portions of the code you're editing using TreeSitter.
     'folke/twilight.nvim',
     config = function()
       require("twilight").setup {}
     end,
   },
-  { 
-    -- Create key bindings that stick. WhichKey helps you remember your Neovim keymaps, by showing available keybindings in a popup as you type. 
+  {
+    -- Create key bindings that stick. WhichKey helps you remember your Neovim keymaps, by showing available keybindings in a popup as you type.
     'folke/which-key.nvim',
     config = function()
       require("which-key").setup {}
@@ -361,7 +361,7 @@ require("lazy").setup({
     end
   },
   {
-    -- A completion plugin for neovim coded in Lua. 
+    -- A completion plugin for neovim coded in Lua.
     'hrsh7th/nvim-cmp',
     event = "InsertEnter",
     dependencies = {
@@ -576,55 +576,30 @@ require("lazy").setup({
 
       vim.lsp.enable("lua")
 
-      local nvim_lsp = require('lspconfig')
-      local flags = {
-        debounce_text_changes = 500,
+      local lsp_servers = {
+        gopls = { autostart = true },
+        rust_analyzer = { autostart = true },
+        zls = { autostart = false },
+        hls = {
+          cmd = { 'haskell-language-server-wrapper', '--lsp' },
+          autostart = false,
+        },
+        clojure_lsp = { autostart = false },
+        clangd = {
+          autostart = false,
+          autoformat = false,
+        },
+        yamlls = { autostart = false },
       }
 
-      nvim_lsp.gopls.setup {
-        on_attach = on_attach,
-        flags = flags,
-        autostart = true,
-        capabilities = caps,
-      }
-      nvim_lsp.rust_analyzer.setup {
-        on_attach = on_attach,
-        flags = flags,
-        autostart = true,
-        capabilities = caps,
-      }
-      nvim_lsp.zls.setup {
-        on_attach = on_attach,
-        flags = flags,
-        autostart = false,
-        capabilities = caps,
-      }
-      nvim_lsp.hls.setup {
-        cmd = { 'haskell-language-server-wrapper', '--lsp' },
-        on_attach = on_attach,
-        flags = flags,
-        autostart = false,
-        capabilities = caps,
-      }
-      nvim_lsp.clojure_lsp.setup {
-        on_attach = on_attach,
-        flags = flags,
-        autostart = false,
-        capabilities = caps,
-      }
-      nvim_lsp.clangd.setup {
-        on_attach = on_attach,
-        flags = flags,
-        autostart = false,
-        capabilities = caps,
-        autoformat = false,
-      }
-      nvim_lsp.yamlls.setup {
-        on_attach = on_attach,
-        flags = flags,
-        autostart = false,
-        capabilities = caps,
-      }
+      for server_name, server_opts in pairs(lsp_servers) do
+        server_opts.on_attach = on_attach
+        server_opts.capabilities = caps
+        vim.lsp.config(server_name, server_opts)
+        if server_opts.autostart ~= false then
+          vim.lsp.enable(server_name)
+        end
+      end
 
       -- local on_references = vim.lsp.handlers["textDocument/references"]
       -- vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
@@ -640,7 +615,7 @@ require("lazy").setup({
     }
   },
   'nvim-lua/popup.nvim',
-  { 
+  {
     'nvim-telescope/telescope.nvim',
     dependencies = {
       {
@@ -698,6 +673,7 @@ require("lazy").setup({
           return true
         end
       })
+      -- send usage references to the quickfix window instead of using dynamic Scratch buffer.
 
       vim.cmd([[
         " nnoremap <silent> - :Telescope file_browser path=%:p:h hidden=true<cr>
@@ -723,7 +699,7 @@ require("lazy").setup({
   {
     'nvim-treesitter/nvim-treesitter',
     config = function()
-      require("nvim-treesitter.configs").setup {
+      require("nvim-treesitter.config").setup {
         ensure_installed = {
           "vimdoc",
           "javascript",
@@ -763,7 +739,6 @@ require("lazy").setup({
     build = ":TSUpdate",
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
-      'nvim-treesitter/playground',
     }
   },
   'radenling/vim-dispatch-neovim',
