@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "lines": [
     [
       {
@@ -99,8 +99,28 @@
         "type": "git-branch"
       },
       {
+        "id": "9900964e-1b1b-4f0d-ae87-d32a33cffb8e",
+        "type": "separator"
+      },
+      {
         "id": "0e622f27-c90d-4c13-8662-1b4ac24adbe8",
         "type": "git-ahead-behind"
+      },
+      {
+        "id": "6d60738d-8211-4809-9544-526f6edff183",
+        "type": "separator"
+      },
+      {
+        "id": "42dba3b9-b9b3-4f16-bda4-378051539eee",
+        "type": "session-usage"
+      },
+      {
+        "id": "a8695f37-29f3-4938-a7d4-ca288df788cc",
+        "type": "separator"
+      },
+      {
+        "id": "6af3d4ea-71bb-4b6d-88ce-9120d89523b1",
+        "type": "weekly-usage"
       }
     ],
     []
@@ -108,6 +128,7 @@
   "flexMode": "full",
   "compactThreshold": 60,
   "colorLevel": 2,
+  "defaultPaddingSide": "both",
   "inheritSeparatorColors": false,
   "globalBold": false,
   "gitCacheTtlSeconds": 5,
