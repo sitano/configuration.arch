@@ -1,7 +1,10 @@
 # Ghostty configuration - converted from Wezterm
 
-# Scrollback
-scrollback-limit = 100000
+# Scrollback (bytes)
+scrollback-limit = 100000000
+
+# Restore windows, tabs and splits on relaunch (macOS)
+window-save-state = always
 
 # Font settings
 font-family = JetBrainsMono Nerd Font Mono

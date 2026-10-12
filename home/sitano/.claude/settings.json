@@ -1,4 +1,5 @@
 {
+  "model": "sonnet",
   "statusLine": {
     "type": "command",
     "command": "mise exec node -- npx -y ccstatusline@latest",
@@ -8,7 +9,9 @@
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "superpowers-extended-cc@superpowers-extended-cc-marketplace": true,
-    "frontend-design@claude-plugins-official": true
+    "frontend-design@claude-plugins-official": false,
+    "code-simplifier@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "superpowers-extended-cc-marketplace": {
@@ -18,6 +21,7 @@
       }
     }
   },
+  "skipDangerousModePermissionPrompt": true,
   "hooks": {
     "Notification": [
       {
@@ -32,5 +36,6 @@
       }
     ]
   },
-  "theme": "dark-daltonized"
+  "theme": "dark-daltonized",
+  "autoCompactEnabled": true
 }

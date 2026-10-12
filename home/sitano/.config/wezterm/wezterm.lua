@@ -4,6 +4,25 @@ local wezterm = require 'wezterm'
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
+-- Session persistence (tabs/panes/workspaces) via resurrect.wezterm
+-- (loaded from a local clone pinned to an old commit: wezterm.plugin.require
+-- fails with "unsupported URL protocol" on https URLs on this machine, even on
+-- 20261010, and newer plugin commits fetch a second plugin that way)
+local resurrect_dir = wezterm.config_dir .. '/plugins/resurrect.wezterm'
+package.path = package.path .. ';' .. resurrect_dir .. '/plugin/?.lua'
+local resurrect = {
+  state_manager = require 'resurrect.state_manager',
+}
+resurrect.state_manager.change_state_save_dir(resurrect_dir .. '/state/')
+resurrect.state_manager.periodic_save {
+  interval_seconds = 60,
+  save_workspaces = true,
+  save_windows = true,
+  save_tabs = true,
+}
+-- Restore the last saved state when WezTerm launches
+wezterm.on('gui-startup', resurrect.state_manager.resurrect_on_gui_startup)
+
 -- This is where you actually apply your config choices
 config.scrollback_lines = 100000
 config.enable_scroll_bar = true
@@ -40,7 +59,7 @@ config.colors = {
 -- config.color_scheme = 'AdventureTime'
 
 config.keys = {
-  -- Turn off the default CMD-m Hide action, allowing CMD-m to
+  -- Turn off the default ALT-m Hide action, allowing ALT-m to
   -- be potentially recognized and handled by the tab
   {
     key = 'LeftArrow',
