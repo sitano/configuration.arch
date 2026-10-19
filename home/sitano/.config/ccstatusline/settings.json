@@ -99,7 +99,7 @@
         "type": "git-branch"
       },
       {
-        "id": "9900964e-1b1b-4f0d-ae87-d32a33cffb8e",
+        "id": "62d5f226-2516-44c6-ba05-ea89afd47954",
         "type": "separator"
       },
       {
@@ -107,20 +107,28 @@
         "type": "git-ahead-behind"
       },
       {
-        "id": "6d60738d-8211-4809-9544-526f6edff183",
+        "id": "1020c3d8-cf5b-4986-9113-48e60f75e050",
         "type": "separator"
       },
       {
-        "id": "42dba3b9-b9b3-4f16-bda4-378051539eee",
+        "id": "a98ce9a3-3efd-4ed9-9859-78e2e8b90f8a",
         "type": "session-usage"
       },
       {
-        "id": "a8695f37-29f3-4938-a7d4-ca288df788cc",
+        "id": "47a262b2-a88b-481f-9d49-77ced28805d7",
         "type": "separator"
       },
       {
-        "id": "6af3d4ea-71bb-4b6d-88ce-9120d89523b1",
+        "id": "11fa86cf-b9b8-46c3-b817-2b91bcfb7dbd",
         "type": "weekly-usage"
+      },
+      {
+        "id": "7ea9b65e-1abd-4891-a4da-dbdd482f4596",
+        "type": "separator"
+      },
+      {
+        "id": "632eb9f9-1f26-4a29-aa94-87dd277de3f8",
+        "type": "reset-timer"
       }
     ],
     []
@@ -132,6 +140,8 @@
   "inheritSeparatorColors": false,
   "globalBold": false,
   "gitCacheTtlSeconds": 5,
+  "terminalWidthCacheTtlSeconds": 5,
+  "customCommandCacheTtlSeconds": 0,
   "minimalistMode": false,
   "powerline": {
     "enabled": false,
