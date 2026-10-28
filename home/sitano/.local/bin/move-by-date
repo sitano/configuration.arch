@@ -1,0 +1,33 @@
+#!/usr/bin/env python3
+"""Move everything in cwd (except YYYY dirs and IGNORE) to ./YYYY/MM/name by creation date."""
+import argparse, fnmatch, os, re, shutil, subprocess, sys
+from datetime import datetime
+
+# shell-style patterns (*, ?, [abc]), case-sensitive
+IGNORE = {"Telegram Desktop"}
+
+
+def birthtime(path):
+    # Python's os.stat has no st_birthtime on Linux; stat(1) reads it via statx
+    t = int(subprocess.check_output(["stat", "-c", "%W", "--", path]))
+    return t or os.lstat(path).st_mtime  # 0 = fs doesn't record birth time
+
+
+ap = argparse.ArgumentParser(description=__doc__)
+ap.add_argument("-i", "--show-ignored", action="store_true", help="print ignored items")
+args = ap.parse_args()
+
+for name in sorted(os.listdir(".")):
+    if re.fullmatch(r"\d{4}", name) or any(fnmatch.fnmatchcase(name, p) for p in IGNORE):
+        if args.show_ignored:
+            print(f"ignored {name}")
+        continue
+    d = datetime.fromtimestamp(birthtime(name))
+    dest_dir = os.path.join(f"{d.year:04d}", f"{d.month:02d}")
+    dest = os.path.join(dest_dir, name)
+    if os.path.lexists(dest):
+        print(f"skip {name}: {dest} exists", file=sys.stderr)
+        continue
+    os.makedirs(dest_dir, exist_ok=True)
+    shutil.move(name, dest)
+    print(f"{name} -> {dest}")

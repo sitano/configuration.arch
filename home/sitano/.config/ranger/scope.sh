@@ -3,6 +3,26 @@
 set -o noclobber -o noglob -o nounset -o pipefail
 IFS=$'\n'
 
+## Arch Linux packages used by this script. Each handler tries tools in order
+## and falls back, so only install what you need. (AUR) = not in official repos.
+##   Core:        file coreutils ncurses hexyl
+##   Archives:    ouch atool libarchive unrar 7zip
+##   PDF:         poppler mupdf-tools
+##   Metadata:    perl-image-exiftool mediainfo
+##   Torrent:     transmission-cli
+##   Office:      odt2txt pandoc-cli xlsx2csv (AUR) catdoc
+##   HTML:        w3m lynx elinks
+##   JSON:        jq python
+##   Text:        bat highlight python-pygments
+##   Images:      imagemagick libheif w3m (w3mimgdisplay, for exit 7 previews)
+##   Fonts:       fontforge
+##   DjVu:        djvulibre
+##
+##   sudo pacman -S --needed file hexyl ouch atool libarchive unrar 7zip poppler \
+##       mupdf-tools perl-image-exiftool mediainfo transmission-cli pandoc-cli \
+##       odt2txt catdoc w3m lynx elinks jq python highlight bat python-pygments \
+##       imagemagick libheif fontforge djvulibre
+
 ## If the option `use_preview_script` is set to `true`,
 ## then this script will be called and its output will be displayed in ranger.
 ## ANSI color codes are supported.
@@ -52,6 +72,7 @@ handle_extension() {
         ## Archive
         a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|\
         rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)
+            ouch list -- "${FILE_PATH}" && exit 5
             atool --list -- "${FILE_PATH}" && exit 5
             bsdtar --list --file "${FILE_PATH}" && exit 5
             exit 1;;
@@ -306,11 +327,11 @@ handle_mime() {
                 local pygmentize_format='terminal'
                 local highlight_format='ansi'
             fi
+            env COLORTERM=8bit bat --color=always --style="plain" \
+                -- "${FILE_PATH}" && exit 5
             env HIGHLIGHT_OPTIONS="${HIGHLIGHT_OPTIONS}" highlight \
                 --out-format="${highlight_format}" \
                 --force -- "${FILE_PATH}" && exit 5
-            env COLORTERM=8bit bat --color=always --style="plain" \
-                -- "${FILE_PATH}" && exit 5
             pygmentize -f "${pygmentize_format}" -O "style=${PYGMENTIZE_STYLE}"\
                 -- "${FILE_PATH}" && exit 5
             exit 2;;
@@ -338,8 +359,11 @@ handle_mime() {
 }
 
 handle_fallback() {
-    echo '----- File Type Classification -----' && file --dereference --brief -- "${FILE_PATH}" && exit 5
-    exit 1
+    echo '----- File Type Classification -----' && file --dereference --brief -- "${FILE_PATH}" || exit 1
+    ## Hex dump of the first bytes of unknown/binary files
+    hexyl --color=always --length=1KiB --terminal-width="${PV_WIDTH}" \
+        -- "${FILE_PATH}" 2>/dev/null
+    exit 5
 }
 
 
