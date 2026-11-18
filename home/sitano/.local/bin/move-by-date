@@ -8,6 +8,9 @@ IGNORE = {"Telegram Desktop"}
 
 
 def birthtime(path):
+    st = os.lstat(path)
+    if hasattr(st, "st_birthtime"):  # macOS/BSD
+        return st.st_birthtime
     # Python's os.stat has no st_birthtime on Linux; stat(1) reads it via statx
     t = int(subprocess.check_output(["stat", "-c", "%W", "--", path]))
     return t or os.lstat(path).st_mtime  # 0 = fs doesn't record birth time
